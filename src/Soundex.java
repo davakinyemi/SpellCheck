@@ -43,7 +43,7 @@
   
      private static final int CODE_LENGTH = 4;
   
-     public static String encode(String s) throws IOException {
+     public static String encode(String s) {
   
   
         // Loop to read all input lines
@@ -53,20 +53,22 @@
            // Check for a blank line
            if (s.length() <= 0) {
               System.out.println ("Bad input line.");
-              continue;
+              return "0";
            }
-  
+           
+           s = s.replaceAll("'", "");
+           
            // Transform input string to all caps
            final char [] input = s.toUpperCase().toCharArray();
   
            // Check the input line for non-alpha characters
            for (int i = 0; i < input.length; i++) {
-              if (!Character.isLetter(input[i])) {
+              if ((int) input[i] < 65 || (int) input[i] > 90) {
                  System.out.println ("Bad input line.");
-                 continue read_loop;
+                 return "0";
               }
            }
-  
+   
            int code_index=0;
            char[] code = new char[CODE_LENGTH];
   
@@ -89,7 +91,7 @@
            for (int i = code_index; i < CODE_LENGTH; i++) {
               code[i] = '0';
            }
-           return s + " " + String.valueOf(code);
+           return String.valueOf(code);
         }
         return null;
      }

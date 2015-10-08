@@ -18,11 +18,10 @@ public class SpellCheckSimulator {
         // TODO code application logic here
         //Dictionary dict = new Dictionary();
         //out.println(dict.getLexiconMap().toString());
-        try{
-            out.println(Soundex.encode("Sick") + " " + Soundex.encode("Cik"));        
-        }catch(Exception ex){
-            
-        }
+        //out.println(Soundex.encode("bucket") + " " + Soundex.encode("buket"));  
+        SpellCheck sp = new SpellCheck();
+        out.println(sp.check("buket"));
+        
     }
     
 }

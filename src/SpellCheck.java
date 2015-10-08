@@ -12,7 +12,7 @@ import static java.lang.System.out;
  */
 public class SpellCheck {
     private final Dictionary dictionary;
-    private ArrayList<String> words;
+    private ArrayList<String> words, wordList; 
     
     public SpellCheck(){
         dictionary = new Dictionary();
@@ -20,7 +20,6 @@ public class SpellCheck {
     }
             
     private ArrayList searchWord(String word){
-        ArrayList<String> wordList;
         char s = word.toUpperCase().charAt(0);
         int asciiVal = (int) s;
         
@@ -35,15 +34,20 @@ public class SpellCheck {
         }
         
         if(words.isEmpty()){
-            
-        }
+            words = getSimilarWords(word);
+            if(words.isEmpty())
+                out.println("Sorry, word could not be found. Try a different spelling");
+        } 
         
         return words;
     }
     
-    private ArrayList similarWords(){
-        
-        return null;
+    private ArrayList getSimilarWords(String word){
+        String sCode = Soundex.encode(word);
+        wordList.stream().filter((s) -> (Soundex.encode(s).equals(sCode))).forEach((s) -> {
+            words.add(s);
+        });
+        return words;
     }
     
     public ArrayList check(String word){   
