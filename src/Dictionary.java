@@ -21,6 +21,7 @@ public class Dictionary {
         prepareHashMap();
     }   
     
+    //add arraylists for storing words by alphabet to hashmap
     private void prepareHashMap(){
         char c;
         for(int i = 65; i <= 90; i++){
@@ -30,6 +31,7 @@ public class Dictionary {
         loadFile();
     }
     
+    // load lexicon file (txt)
     private void loadFile(){
             try (BufferedReader reader = new BufferedReader(new FileReader(lexicon))) {
                 String line;
@@ -41,6 +43,7 @@ public class Dictionary {
 	}
     }
     
+    // get word from text file and add to corresponding list in hashmap based on first letter
     private void addWords(String word){
         char c = word.toUpperCase().charAt(0);
         int asciiVal = (int) c;

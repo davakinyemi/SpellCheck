@@ -11,19 +11,19 @@ import static java.lang.System.out;
  * @author dav
  */
 public class SpellCheck {
-    private final Dictionary dictionary;
-    private ArrayList<String> words, wordList; 
+    private final Dictionary dictionary; // dictionary instance
+    private ArrayList<String> words, wordList; // arraylists to store words 
     
     public SpellCheck(){
         dictionary = new Dictionary();
         words = new ArrayList<>();
     }
             
-    private ArrayList searchWord(String word){
+    private String searchWord(String word){
         char s = word.toUpperCase().charAt(0);
         int asciiVal = (int) s;
         
-        if(asciiVal >= 65 && asciiVal <= 90){
+        if(asciiVal >= 65 && asciiVal <= 90){ // if character is an alphabet
             wordList = (ArrayList) dictionary.getLexiconMap().get(s);
             wordList.stream().filter((c) -> (c.equals(word))).forEach((c) -> {
                 words.add(c);
@@ -33,24 +33,32 @@ public class SpellCheck {
             return null;
         }
         
-        if(words.isEmpty()){
-            words = getSimilarWords(word);
-            if(words.isEmpty())
+        if(words.isEmpty()){ // if word is not found
+            useSoundex(word); // use soundex to get list of similar words
+            useJaroWinkler(word); // use jarowinkler to narrow down list of words
+            if(wordList.isEmpty())
                 out.println("Sorry, word could not be found. Try a different spelling");
+            return word.toUpperCase() + ": " + wordList.toString();
         } 
         
-        return words;
+        return word.toUpperCase() + ": " + words.toString();
     }
     
-    private ArrayList getSimilarWords(String word){
+    private void useJaroWinkler(String word){
+        wordList.clear();
+        words.stream().filter((s) -> (new JaroWinkler().similarity(s, word) >= 0.85)).forEach((s) -> {
+            wordList.add(s);
+        });
+    }
+    
+    private void useSoundex(String word){
         String sCode = Soundex.encode(word);
         wordList.stream().filter((s) -> (Soundex.encode(s).equals(sCode))).forEach((s) -> {
             words.add(s);
         });
-        return words;
     }
     
-    public ArrayList check(String word){   
+    public String check(String word){   
         return searchWord(word);
     }
 }

@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 import static java.lang.System.out;
-
 /**
  *
  * @author dav
@@ -15,13 +14,10 @@ public class SpellCheckSimulator {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-        //Dictionary dict = new Dictionary();
-        //out.println(dict.getLexiconMap().toString());
-        //out.println(Soundex.encode("bucket") + " " + Soundex.encode("buket"));  
-        SpellCheck sp = new SpellCheck();
-        out.println(sp.check("buket"));
-        
+        // TODO code application logic here  
+        out.println(new SpellCheck().check("buket"));
+        out.println(new SpellCheck().check("bible"));
+        out.println(new SpellCheck().check("joket"));
     }
     
 }

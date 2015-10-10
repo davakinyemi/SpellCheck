@@ -64,7 +64,6 @@
            // Check the input line for non-alpha characters
            for (int i = 0; i < input.length; i++) {
               if ((int) input[i] < 65 || (int) input[i] > 90) {
-                 System.out.println ("Bad input line.");
                  return "0";
               }
            }
